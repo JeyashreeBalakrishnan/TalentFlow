@@ -1,35 +1,49 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // FIXED: Added import
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const userId = res.data.user?._id || res.data._id || res.data.user?.id;
+      if(userId){
+      
+      // 1. Save EVERYTHING - You were missing 'userId'
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('userRole', res.data.user?.role || res.data.role);
+      localStorage.setItem('userName', res.data.user?.name || res.data.name);
+      localStorage.setItem('userId', userId); // <--- ADD THIS LINE!
 
-  // LOGIC BYPASS: We skip the fetch and manually set the data
-  console.log("Bypassing backend... Redirecting to Frontend Dashboard.");
-
-  // 1. Manually set the "Keys" in your browser storage
-  localStorage.setItem('token', 'fake-dev-token');
-  localStorage.setItem('userName', 'Test User');
-  
-  // IMPORTANT: Set this to exactly what your App.js ProtectedRoute expects
-  localStorage.setItem('role', 'employee'); 
-
-  // 2. Immediate redirect
-  setTimeout(() => {
-    setLoading(false);
-    navigate('/dashboard');
-  }, 500); // Small delay just to show the loading spinner
-};
+      console.log("Login Success. ID saved:", userId);
+      const role = res.data.user?.role || res.data.role;
+      const destination = (role === 'admin') ? '/admin' : '/dashboard';
+      setTimeout(() => {
+        navigate(destination);
+      }, 100);
+       } else {
+         console.error("CRITICAL: No ID found in backend response. Check Network -> Response tab.");
+         alert("System error: User profile incomplete.");
+       }
+     
+      // 2. Immediate redirect (Remove the timeouts, they cause the 'blinking')
+    
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Invalid Credentials");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans text-slate-900">
-      
       {/* LEFT SIDE: Visual Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-slate-900 flex-col justify-between p-12 text-white">
         <div>

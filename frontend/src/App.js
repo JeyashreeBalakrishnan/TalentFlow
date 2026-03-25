@@ -16,35 +16,50 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Login />} />
-        
-        {/* User Route */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Protected Employee Routes */}
         <Route path="/dashboard" element={
           <ProtectedRoute requiredRole="employee">
             <Dashboard />
           </ProtectedRoute>
         } />
+        <Route path="/skills" element={
+          <ProtectedRoute requiredRole="employee">
+            <UserSkills />
+          </ProtectedRoute>
+        } />
+        <Route path="/goals" element={
+          <ProtectedRoute requiredRole="employee">
+            <PerformanceGoals />
+          </ProtectedRoute>
+        } />
 
-        {/* Admin Route */}
+        {/* Protected Admin Routes */}
         <Route path="/admin" element={
           <ProtectedRoute requiredRole="admin">
             <AdminDashboard />
           </ProtectedRoute>
         } />
-
-        {/* Profile Route */}
-        <Route path="/profile" element={<Profile />} />
         <Route path="/admin/skills" element={<ProtectedRoute requiredRole="admin"><SkillMatrix /></ProtectedRoute>} />
         <Route path="/admin/employees" element={<ProtectedRoute requiredRole="admin"><ManageEmployees /></ProtectedRoute>} />
         <Route path="/admin/reviews" element={<ProtectedRoute requiredRole="admin"><PerformanceReviews /></ProtectedRoute>} />
-        <Route path="/skills" element={<ProtectedRoute requiredRole="employee"><UserSkills /></ProtectedRoute>} />
+        
+        {/* Shared/Dynamic Routes */}
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-        <Route path="/goals" element={<ProtectedRoute requiredRole="employee"><PerformanceGoals /></ProtectedRoute>} />
-        {/* Catch-all route for 404s */}
+        <Route path="/performance/:id" element={<ProtectedRoute><PerformanceGoals /></ProtectedRoute>} />
+
+        {/* Update these routes in your App.js */}
+        <Route path="/skills" element={<ProtectedRoute requiredRole="employee"><UserSkills /></ProtectedRoute>} />
+        <Route path="/skills/:id" element={<ProtectedRoute><UserSkills /></ProtectedRoute>} />
+
+        {/* Catch-all route for 404s - THIS IS THE BOUNCER */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
 export default App;

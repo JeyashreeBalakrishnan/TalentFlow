@@ -54,4 +54,44 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Get all employees (for Admin view)
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find().select('-password'); // Don't send passwords!
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post('/create-user', async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    // 1. Validation check
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // 2. Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // 3. Create user with a default department to avoid validation errors
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'employee',
+      department: 'General' // Adds a default value
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: "User created successfully!" });
+  } catch (err) {
+    console.error("BACKEND ERROR:", err.message); // Look for this in your VS Code terminal!
+    res.status(500).json({ message: "Server error: " + err.message });
+  }
+});
+
 module.exports = router;
