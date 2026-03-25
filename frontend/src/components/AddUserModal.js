@@ -11,7 +11,8 @@ const AddUserModal = ({ isOpen, onClose, onUserAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/create-user', formData);
+      //await axios.post('http://localhost:5000/api/auth/create-user', formData);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/create-user`, formData);
       alert("User Created!");
       onUserAdded(); // Refresh the list
       onClose();     // Close the modal

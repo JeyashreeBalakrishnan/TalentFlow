@@ -42,6 +42,7 @@ const AddGoalModal = ({ isOpen, onClose, onGoalAdded, editingGoal }) => {
   };
 
   try {
+    //const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/goals/add`, goalData);
     const res = await axios.post('http://localhost:5000/api/goals/add', goalData);
     if (res.status === 201) {
       alert("Goal Created!");

@@ -6,7 +6,8 @@ const SkillMatrix = () => {
   const [newSkill, setNewSkill] = useState({ name: '', level: 'Beginner' });
 
   const fetchSkills = async () => {
-    const res = await axios.get('http://localhost:5000/api/skills');
+    //const res = await axios.get('http://localhost:5000/api/skills');
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/skills`);
     setSkills(res.data);
   };
 
@@ -14,7 +15,8 @@ const SkillMatrix = () => {
 
   const handleAddSkill = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/api/skills/add', newSkill);
+    //await axios.post('http://localhost:5000/api/skills/add', newSkill);
+    await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/skills/add`, newSkill);
     setNewSkill({ name: '', level: 'Beginner' });
     fetchSkills();
   };

@@ -17,7 +17,8 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/goals/user/${loggedInUserId}`);
+      //const res = await axios.get(`http://localhost:5000/api/goals/user/${loggedInUserId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/goals/user/${loggedInUserId}`);
       setGoals(res.data);
     } catch (err) {
       console.error("Error fetching goals:", err);
@@ -34,7 +35,8 @@ const Dashboard = () => {
   const deleteGoal = async (id) => {
   if (window.confirm("Are you sure you want to delete this goal?")) {
     try {
-      await axios.delete(`http://localhost:5000/api/goals/${id}`);
+      //await axios.delete(`http://localhost:5000/api/goals/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/goals/${id}`);
       fetchMyData(); // Refresh the list after deleting
     } catch (err) {
       console.error("Error deleting goal:", err);

@@ -19,7 +19,8 @@ const PerformanceGoals = () => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/goals/user/${targetUserId}`);
+      //const res = await axios.get(`http://localhost:5000/api/goals/user/${targetUserId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/goals/user/${targetUserId}`);
       setGoals(res.data);
     } catch (err) {
       console.error("Error fetching goals:", err);
@@ -31,7 +32,8 @@ const PerformanceGoals = () => {
 const handleUpdateProgress = async (goalId, newProgress) => {
   try {
     // 1. Send the update to the backend
-    await axios.patch(`http://localhost:5000/api/goals/${goalId}`, {
+    //await axios.patch(`http://localhost:5000/api/goals/${goalId}`
+    await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/api/goals/${goalId}`, {
       progress: Number(newProgress),
       // Automatically set status to 'Completed' if progress hits 100
       status: Number(newProgress) === 100 ? 'Completed' : 'In Progress'

@@ -11,7 +11,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/auth/users');
+       // const res = await axios.get('http://localhost:5000/api/auth/users');
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/users`);
         setEmployees(res.data);
       } catch (err) {
         console.error("Error fetching employees", err);
