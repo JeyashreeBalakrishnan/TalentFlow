@@ -13,7 +13,7 @@ const Login = () => {
     try {
       //const res = await axios.post('http://localhost:5000/api/auth/login', formData);
       // Replace the variable with your ACTUAL Render link in quotes:
-const res = await axios.post('https://talentflow-ieyr.onrender.com/api/auth/login', formData);
+const res = await axios.post('https://talentflow-1eyr.onrender.com/api/auth/login', formData);
       //const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, formData);
       const userId = res.data.user?._id || res.data._id || res.data.user?.id;
       if(userId){
