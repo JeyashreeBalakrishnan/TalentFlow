@@ -98,13 +98,21 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Dashboard Body */}
+    {/* Dashboard Body */}
 <main className="p-8 overflow-y-auto">
   {/* Stats Row */}
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
     {[
-      { label: 'Assigned Goals', val: goals.length.toString().padStart(2, '0'), color: 'text-white' },
-      { label: 'Completed', val: goals.filter(g => g.status === 'Completed').length.toString().padStart(2, '0'), color: 'text-green-400' },
+      { 
+        label: 'Assigned Goals', 
+        val: (Array.isArray(goals) ? goals.length : 0).toString().padStart(2, '0'), 
+        color: 'text-white' 
+      },
+      { 
+        label: 'Completed', 
+        val: (Array.isArray(goals) ? goals.filter(g => g.status === 'Completed').length : 0).toString().padStart(2, '0'), 
+        color: 'text-green-400' 
+      },
       { label: 'Overall Rating', val: '4.8', color: 'text-blue-400' },
       { label: 'Feedback', val: '01', color: 'text-amber-500' }
     ].map((stat, i) => (
@@ -119,17 +127,19 @@ const Dashboard = () => {
   <div className="bg-[#1e293b] rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
     <div className="p-8 border-b border-slate-800 flex justify-between items-center">
       <h3 className="font-bold text-white text-xl">Active Performance Goals</h3>
-      <button onClick={() => { setEditingGoal(null); setIsModalOpen(true); }}>
-       + Add New Goal
+      <button 
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-bold transition"
+        onClick={() => { setEditingGoal(null); setIsModalOpen(true); }}
+      >
+        + Add New Goal
       </button>
     </div>
 
     <div className="p-6">
       {loading ? (
         <p className="text-center text-slate-500">Loading your goals...</p>
-      ) : goals.length > 0 ? (
+      ) : (Array.isArray(goals) && goals.length > 0) ? (
         <div className="space-y-4">
-          {/* ONLY ONE MAP HERE */}
           {goals.map((goal) => (
             <div key={goal._id} className="relative bg-[#0f172a] p-6 rounded-3xl border border-slate-800 flex justify-between items-center hover:border-blue-500/50 transition">
               <div>
@@ -139,7 +149,6 @@ const Dashboard = () => {
               </div>
               
               <div className="flex gap-4">
-                {/* Delete Button */}
                 <button 
                   onClick={() => deleteGoal(goal._id)} 
                   className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl transition font-bold text-xs"
