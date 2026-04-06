@@ -21,7 +21,7 @@ const PerformanceGoals = () => {
     try {
       //const res = await axios.get(`http://localhost:5000/api/goals/user/${targetUserId}`);
       //const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/goals/user/${targetUserId}`);
-      const res = await axios.get(`https://talentflow-1eyr.onrender.com/api/goals/user/${loggedInUserId}`);
+      const res = await axios.get(`https://talentflow-1eyr.onrender.com/api/goals/user/${targetUserId}`);
       setGoals(res.data);
     } catch (err) {
       console.error("Error fetching goals:", err);
