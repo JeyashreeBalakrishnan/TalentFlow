@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 //const API = axios.create({ baseURL: 'http://localhost:5000/api' });
-const API = axios.create({ baseURL: `${import.meta.env.VITE_API_BASE_URL}/api` });
+//const API = axios.create({ baseURL: `${import.meta.env.VITE_API_BASE_URL}/api` });
+const API = axios.create({ baseURL: 'https://talentflow-1eyr.onrender.com/api' });
 
 // This automatically attaches your "digital badge" (token) to every request
 API.interceptors.request.use((req) => {

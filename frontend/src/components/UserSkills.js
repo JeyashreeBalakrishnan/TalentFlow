@@ -13,7 +13,8 @@ const UserSkills = () => {
   const fetchSkills = async () => {
     try {
       //const res = await axios.get(`http://localhost:5000/api/skills/user/${targetUserId}`);
-      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/skills/user/${targetUserId}`);
+      //const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/skills/user/${targetUserId}`);
+      const res = await axios.get(`https://talentflow-1eyr.onrender.com/api/skills/user/${targetUserId}`);
       setSkills(res.data);
     } catch (err) {
       console.error("Error fetching skills:", err);
@@ -26,7 +27,8 @@ const UserSkills = () => {
   if (window.confirm("Remove this skill from your profile?")) {
     try {
       //await axios.delete(`http://localhost:5000/api/skills/${id}`);
-      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/skills/${id}`);
+      //await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/skills/${id}`);
+      await axios.delete(`https://talentflow-1eyr.onrender.com/api/skills/${id}`);
       fetchSkills(); // Refresh the list
     } catch (err) {
       console.error("Error deleting skill:", err);
@@ -42,7 +44,8 @@ const UserSkills = () => {
     const targetUserId = id || localStorage.getItem('userId');
     try {
       //await axios.post('http://localhost:5000/api/skills/add', { ...newSkill, userId: targetUserId });
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/skills/add`, { ...newSkill, userId: targetUserId });
+      //await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/skills/add`, { ...newSkill, userId: targetUserId });
+      await axios.post('https://talentflow-1eyr.onrender.com/api/skills/add', { ...newSkill, userId: targetUserId });
       setNewSkill({ name: '', level: 'Beginner', category: 'Technical' });
       fetchSkills(); // Refresh the list immediately
     } catch (err) {

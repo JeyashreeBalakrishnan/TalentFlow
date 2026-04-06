@@ -7,7 +7,8 @@ const SkillMatrix = () => {
 
   const fetchSkills = async () => {
     //const res = await axios.get('http://localhost:5000/api/skills');
-    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/skills`);
+    //const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/skills`);
+    const res = await axios.get('https://talentflow-1eyr.onrender.com/api/skills');
     setSkills(res.data);
   };
 
@@ -16,7 +17,8 @@ const SkillMatrix = () => {
   const handleAddSkill = async (e) => {
     e.preventDefault();
     //await axios.post('http://localhost:5000/api/skills/add', newSkill);
-    await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/skills/add`, newSkill);
+    //await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/skills/add`, newSkill);
+    await axios.post('https://talentflow-1eyr.onrender.com/api/skills/add', newSkill);
     setNewSkill({ name: '', level: 'Beginner' });
     fetchSkills();
   };
